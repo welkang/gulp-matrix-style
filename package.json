@@ -1,0 +1,27 @@
+{
+  "name": "gulp-matrix-style",
+  "version": "1.0.0",
+  "description": "stylesheets processing of the Matrix project",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/welkang/gulp-matrix-style.git"
+  },
+  "author": "welkang",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/welkang/gulp-matrix-style/issues"
+  },
+  "homepage": "https://github.com/welkang/gulp-matrix-style",
+  "devDependencies": {
+    "cheerio": "^0.19.0",
+    "gulp": "^3.9.0",
+    "through2": "^2.0.0"
+  }
+}

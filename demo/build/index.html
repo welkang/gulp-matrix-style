@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+p {
+	margin: 0 0 5px;
+	font-size: 14px;
+}
+</style>
+</head>
+<body>
+
+<script id="viewportTmpl" type="text/lizard-template">
+    <div id="contain_main" class="schedule-page">
+    </div>
+</script>
+
+<script type="text/lizard-template" id="tpl_scheduleDetail">
+    <div class="body-bg">&nbsp;</div>
+    <!--顶部航班动态信息-->
+    <div class="head">
+        <!-- 日期栏 -->
+        <div class="riqi"> <%=datebar.date%>&nbsp;&nbsp;<%=datebar.day%> </div>
+        <!-- 状态栏 -->
+        <div class="zhuangtai">
+            <span class="flag <%= (vars.status == '延误' || vars.status == '取消' || vars.status=='备降' || vars.status == '返航')? 'flag2': ''%>"><%=vars.status%></span>
+
+            <%if(statusbar.text2){%>
+                <span class="tips tips2">
+                    <span class="fnt-15"><%=statusbar.text1%></span>
+                    <br />
+                    <span><%=statusbar.text2%></span>
+                </span>
+            <%}else if(statusbar.text1){%>
+                <span class="tips">
+                    <span class="fnt-15"><%=statusbar.text1%></span>
+                </span>
+            <%}%>
+        </div>
+        <!-- 时间栏 -->
+        <div class="shijian">
+            <div class="qf">
+                <div><%=timetable.zone1.text%></div>
+                <!-- 国际才显示时间对比弹层 -->
+                <%if( (flag & 2) == 2 ){%>
+                    <div class="sj js_showDetailDate" data-type="d">
+                        <span> <%=timetable.zone1.time%> </span>
+                        <i class="icon-yjt"></i>
+                    </div>
+                <%}else{%>
+                    <div class="sj" data-type="d"><%=timetable.zone1.time%></div>
+                <%}%>
+                <div><%=timetable.zone3.text%><%=timetable.zone3.time%></div>
+            </div>
+            <div class="dd">
+                <div><%=timetable.zone2.text%></div>
+                <!-- 国际才显示时间对比弹层 -->
+                <%if( (flag & 2) == 2 ){%>
+                    <div class="sj js_showDetailDate" data-type="a">
+                        <span> <%=timetable.zone2.time%> </span>
+                        <%if(timetable.zone2.interval != 0){%>
+                            <span class="interval-num"> <%=timetable.zone2.interval%></span>
+                        <%}%>
+                        <i class="icon-yjt"></i>
+                    </div>
+                <%}else{%>
+                    <div class="sj" data-type="a">
+                        <%=timetable.zone2.time%> 
+                        <%if(timetable.zone2.interval != 0){%>
+                            <i class="interval-num"> <%=timetable.zone2.interval%></i>
+                        <%}%>
+                    </div>
+                <%}%>
+                <div><%=timetable.zone4.text%><%=timetable.zone4.time%></div>
+            </div>
+            <div class="zdl">准点率:<%=vars.puncRate%></div>
+        </div>
+
+        <!-- 进度栏 -->
+        <div class="jindu-pd">
+            <div class="jindu  <%= (vars.status == '延误' || vars.status == '取消' || vars.status=='备降' || vars.status == '返航')? 'jindu2': ''%>">
+                <div class="bg" style="width: <%=vars.jd%>%">
+                    <div class="icon-flight">
+                        <i class="iconfont icon-dot">&#xe608;</i>
+                        <i class="iconfont icon-flt">&#xe609;</i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 机场信息 -->
+        <table class="jichangxinxi">
+            <tr>
+                <td class="js_jumpGL" data-port="<%=vars.dPort%>">
+                    <div class="jc"><%= vars.dPortName && vars.dPortName.replace('国际', '')%><%=vars.dTerminal%></div>
+                    <div>
+                        <span class="cs"><%=vars.dcname%></span>
+                        <%if(weathers[0]){%>
+                            <span class="tq">
+                                <%if(weathers[0].type != 0 && weathers[0].type != ''){%>
+                                    <img src="@getConfigPath("h5.fplus.matrixPath")/img/weather/tq-<%=weathers[0].type%>.png">
+                                <%}%>
+                                <%if(weathers[0].temp != ''){%>
+                                    <%=weathers[0].temp%>&#176;C
+                                <%}%>
+                            </span>
+                        <%}%>
+                    </div>
+                    <%if(vars.dPort){%>
+                        <i class="icon-yjt"></i>
+                    <%}%>
+                </td>
+                <td class="js_jumpGL" data-port="<%=vars.aPort%>">
+                    <div class="jc"><%=vars.aPortName && vars.aPortName.replace('国际', '')%><%=vars.aTerminal%></div>
+                    <div>
+                        <span class="cs"><%=vars.acname%></span>
+                        <%if(weathers[1]){%>
+                            <span class="tq">
+                                <%if(weathers[1].type != 0 && weathers[1].type != ''){%>
+                                    <img src="@getConfigPath("h5.fplus.matrixPath")/img/weather/tq-<%=weathers[1].type%>.png">
+                                <%}%>
+                                <%if(weathers[1].temp != ''){%>
+                                    <%=weathers[1].temp%>&#176;C
+                                <%}%>
+                            </span>
+                        <%}%>
+                    </div>
+                    <%if(vars.aPort){%>
+                        <i class="icon-yjt"></i>
+                    <%}%>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <dl>
+                        <dt>值机柜台</dt>
+                        <dd>
+                            <span class="fnt-20"><%=varEx.counter || '--'%></span>
+                        </dd>
+                    </dl>
+                    <dl>
+                        <dt>登机口</dt>
+                        <dd>
+                            <span class="fnt-20"><%=varEx.bgate || '--'%></span>
+                            <%if(varEx.boardrmk){%>
+                                <span>(<%=varEx.boardrmk%>)</span>
+                            <%}%> 
+                        </dd>
+                    </dl>
+                </td>
+                <td>
+                    <dl>
+                        <dt>行李转盘</dt>
+                        <dd>
+                            <span class="fnt-20"><%=varEx.turntable || '--'%></span>
+                            <%if(varEx.bagrmk){%>
+                                <span>(<%=varEx.bagrmk%>)</span>
+                            <%}%> 
+                        </dd>
+                    </dl>
+                </td>
+            </tr>
+        </table>
+        <div class="daifei">
+            <%if(prev.waitCount > 0){%>
+                <p>前面约还有<%=prev.waitCount%>架航班等待起飞</p>
+            <%}%>
+            <p>航班动态数据由 <a href="javascript:;" data-url="<%=vzurl%>" class="link-fcz js_gotoFCZ">飞常准</a> 提供支持</p>
+        </div>
+    </div>
+    <!--中间机场信息-->
+    <!--底部按钮-->
+    <div id="bottomBarWrapper"></div>
+    <!--E 航班动态-->
+</script>
+
+
+<script type="text/lizard-template" id="tpl_bottomBar">
+    <div class="bt-btns-height">
+        <div class="bt-btns">
+            <button type="button" class="btn-base btn-info btn-lg js_addWxCard">添加至卡包</button>
+            <%if(showBookingBtn){%>
+                <button type="button" class="btn-base btn-warning btn-lg js_gotoBooking" data-url="<%=targetUrl%>">
+                    立即预订
+                    <span class="cut10 jd_discountTip animated">
+                        首次预订，<br />
+                        可享立减10元优惠
+                    </span>
+                </button>
+            <%}%>
+            <button type="button" class="btn-base btn-info btn-lg js_followPubNum">关注公众号</button>
+        </div>
+    </div>    
+</script>
+
+<script type="text/lizard-config">
+    (function () {
+        return {
+            "url_schema": '/schedule/detail/{dPort}.{aPort}-{flightNo}-{queryDate}.html', // {出发机场三字码}{到达机场三字码}{航班号}{查询日期，格式yyyyMMdd}
+            "view": {
+                "viewport": Lizard.T("viewportTmpl")
+            },
+            models: {
+                apis: [],
+                filter: function(datas) {
+                    return {};
+                }
+            },
+            "controller": '@getConfigPath("h5.fplus.matrixPath")/controller/schedule/detail.js',
+            "viewName":"matrix-schedule-detail"
+        }
+
+    })();
+</script>
+</body>
+</html>
