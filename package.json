@@ -1,6 +1,6 @@
 {
   "name": "gulp-matrix-style",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "stylesheets processing of the Matrix project",
   "main": "index.js",
   "directories": {
