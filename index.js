@@ -13,7 +13,7 @@ module.exports = function(opt) {
                 href = $el.attr('href');
 
             var basename = path.basename(href);
-            var filepath = 'demo/style/' + basename;
+            var filepath = _opt.path + basename;
             var style = fs.readFileSync(filepath).toString();
 
             var inlinedTag = '<style type="text/css">\n' + style + '\n</style>';
@@ -23,4 +23,4 @@ module.exports = function(opt) {
         this.push(file);
         return cb();
     });
-}
+};

@@ -1,5 +1,5 @@
 var gulp = require('gulp'),
-    inlineStyle = require('./index.js');
+    inlineStyle = require('./../index.js');
 
 gulp.task('default', function() {
     return gulp.src('demo/*.html')
