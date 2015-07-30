@@ -19,9 +19,8 @@
     "url": "https://github.com/welkang/gulp-matrix-style/issues"
   },
   "homepage": "https://github.com/welkang/gulp-matrix-style",
-  "devDependencies": {
+  "dependencies": {
     "cheerio": "^0.19.0",
-    "gulp": "^3.9.0",
     "through2": "^2.0.0"
   }
 }
