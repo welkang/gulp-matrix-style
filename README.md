@@ -50,4 +50,9 @@ gulp.task('default', function() {
 });
 ```
 
+### Issues:
+
+- 写在script中的link无法被解析，原因是cheerio只能获取DOM中的link节点
+- <link href="@assetPath("xxx/yyy.css")"/> 无法读取此类型的href值
+
 
