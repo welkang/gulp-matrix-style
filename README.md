@@ -54,5 +54,6 @@ gulp.task('default', function() {
 
 - 写在script中的link无法被解析，原因是cheerio只能获取DOM中的link节点
 - `<link href="@assetPath("xxx/yyy.css")"/>` 无法读取此类型的href值
+- 样式文件中的相对路径引用会出问题，因为html和css文件目录层级不同
 
 
